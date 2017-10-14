@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MusicPlayer</string>
+    <string name="tab_title">Title</string>
+    <string name="tab_artist">Artist</string>
+    <string name="tab_album">Album</string>
+    <string name="tab_genre">Genre</string>
+
+</resources>
