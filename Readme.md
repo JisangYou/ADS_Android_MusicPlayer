@@ -560,8 +560,8 @@ public class Music { // 데이터 모델 클래스
 
 ### 출처
 
-출처: http://unikys.tistory.com/350 [All-round programmer]
-출처: http://www.jynote.net/107 [하늘과 나의 IT 이야기]
+- 출처: http://unikys.tistory.com/350 [All-round programmer]
+- 출처: http://www.jynote.net/107 [하늘과 나의 IT 이야기]
 
 ## TODO
 
