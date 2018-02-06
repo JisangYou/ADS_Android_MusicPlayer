@@ -48,7 +48,7 @@ public class PlayerPagerAdapter extends PagerAdapter {
         textArtist.setText(item.artist);
         ImageView imgAlbum   = view.findViewById(R.id.imgAlbum);
         imgAlbum.setImageURI(item.albumUri);
-        container.addView(view); // 인플레이트한 곳에 addView해준다!
+        container.addView(view); // 인플레이트한 곳에 addView 해준다!
 
         return view;
     }

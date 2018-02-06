@@ -16,7 +16,7 @@ public class MyMusicRecyclerViewAdapter extends RecyclerView.Adapter<MyMusicRecy
     private final List<Music.Item> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyMusicRecyclerViewAdapter(OnListFragmentInteractionListener listener) {
+    public MyMusicRecyclerViewAdapter(OnListFragmentInteractionListener listener) { //리스너로 선언한 곳에서 정의한 데이터를 인자로 세팅할 수 있다.
         mListener = listener;
         mValues = mListener.getList();
     }
@@ -69,6 +69,6 @@ public class MyMusicRecyclerViewAdapter extends RecyclerView.Adapter<MyMusicRecy
         @Override
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";
-        } //의 의미?
+        }
     }
 }

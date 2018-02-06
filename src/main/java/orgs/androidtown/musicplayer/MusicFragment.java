@@ -25,11 +25,11 @@ public class MusicFragment extends Fragment {
     public MusicFragment() {
     }
 
-    public static MusicFragment newInstance(int columnCount) {
+    public static MusicFragment newInstance(int columnCount) { // 메인에서 프래그먼트 생성시
         MusicFragment fragment = new MusicFragment();
-        Bundle args = new Bundle(); //bundle?
-        args.putInt(ARG_COLUMN_COUNT, columnCount); // 번들로 보내면 한꺼번에 보낼 수 있는것인지?
-        fragment.setArguments(args); // 번들객체를 받는 메소드 setArguments
+        Bundle args = new Bundle();
+        args.putInt(ARG_COLUMN_COUNT, columnCount);
+        fragment.setArguments(args);
         return fragment;
     }
 

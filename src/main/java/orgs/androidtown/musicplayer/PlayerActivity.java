@@ -56,25 +56,25 @@ public class PlayerActivity extends AppCompatActivity
     }
 
     SeekBarThread seekBarThread = null;
-    private void setPlayer(){
+    private void setPlayer(){ // 음원 세팅 메소드.
         Music.Item item = music.data.get(current); // music data 클래스안에 있는 아이템 클래스의 포지션값을 받아서 할당한다.
-        Uri musicUri = item.musicUri; //아이템의 musicUri를 할당한다.
+        Uri musicUri = item.musicUri; // 이곳에서 사용할 uri는 아이템에 정의해놓은 MusicUri
         if(seekBarThread != null) //쓰레드가 없으면
-            seekBarThread.setStop(); // 중지메소드를 설정
+            seekBarThread.setStop(); // 중지(flag값으로, 쓰레드를 컨트롤)
         if(player != null) { //마찬가지로 뮤직플레이어가 없으면
-            player.release(); // 해제시켜줌, 서브쓰레드에서 계속 해제시켜주고 있고
-            player = null; // 새로운 것을 null로 할당하여, 다음에 만들어지는 것들에 문제가 없게 한다.
+            player.release();
+            player = null;
         }
 
         player = MediaPlayer.create(this, musicUri); // 미디어 플레이어에 컨텍스트와 아이템에 할당된 Uri를 할당한다.
         player.setLooping(false);// 연속재생을 멈춘다. 세팅하는 것이기 때문에....
 
         // 화면세팅
-        String duration = miliToSec(player.getDuration()); // 16754265 => 03:15,  getDuration은 현재시간을 받아오는 메소드
-        textDuration.setText(duration);
+        String duration = miliToSec(player.getDuration()); // 16754265 => 03:15,  getDuration은 현재시간을 받아오는 안드로이드 자체 메소드
+        textDuration.setText(duration); // duration은 총시간
         textCurrentTime.setText("00:00");
 
-        seekBar.setMax(player.getDuration());
+        seekBar.setMax(player.getDuration()); //setMax는 seekBar 자체 메소드로써, 가지고 온 음원의 총시간을 세팅해준다.
 
         seekBarThread = new SeekBarThread(handler);
         seekBarThread.start();
@@ -90,7 +90,7 @@ public class PlayerActivity extends AppCompatActivity
 
 
     private void initView() {
-        setContentView(R.layout.activity_player);
+        setContentView(R.layout.activity_player); // TODO 의미?
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         controller = (RelativeLayout) findViewById(R.id.controller);
         seekBar = (SeekBar) findViewById(R.id.seekBar);
@@ -111,7 +111,7 @@ public class PlayerActivity extends AppCompatActivity
     }
 
     private void initViewPager() { // 뷰페이저에 어댑터 설정한다.
-        PlayerPagerAdapter adapter = new PlayerPagerAdapter(this, music.data); // 어댑터 객체를 생성하면, PlayerPagerAdapter에 생성자로 만든 것에서 데이터가 세팅됨.
+        PlayerPagerAdapter adapter = new PlayerPagerAdapter(this, music.data); // 어댑터 객체를 생성후, context자원과 데이터를 넣으면, 뷰페이저 세팅
         viewPager.setAdapter(adapter); // 어댑터 세팅
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -134,13 +134,13 @@ public class PlayerActivity extends AppCompatActivity
             }
         });
         if(current > -1) // current가 포지션값을 할당받아 변하면,
-            viewPager.setCurrentItem(current); // viewPager는 현재 current에 맞는 아이템으로 세팅
+            viewPager.setCurrentItem(current); // 인텐트로 넘어온 current(position)값을 이곳에 세팅, 이곳에 인텐트를 보낸 액티비티 아이템과 뷰페이저 화면을 개연성있게 세팅하기 위함.
     }
 
-    private void start() {
-        playButtonStat = Const.STAT_PLAY;
+    private void start() { // 음원재생 시 메소드.
+        playButtonStat = Const.STAT_PLAY; // 음원 재생, 일시정지, 빨리감기 등을 Const에 정의한 키,값으로 상태를 정의. // switch문으로 현재 상태를 구분해 메소드를 실행 시키기 위함.
         player.start();
-        btnPlay.setImageResource(android.R.drawable.ic_media_pause); // 스타트 메소드가 시작되면누르면 멈춤으로 바뀜
+        btnPlay.setImageResource(android.R.drawable.ic_media_pause); // 음원재생 시 버튼의 이미지 변화.
     }
 
     private void pause(){
@@ -199,7 +199,7 @@ public class PlayerActivity extends AppCompatActivity
     };
 }
 
-class SeekBarThread extends Thread {
+class SeekBarThread extends Thread { //쓰레드는 boolean 값으로 상태를 체크해서 처리한다. interrupt(), stop() 사용은 자제.
     private boolean runFlag = true;
     private Handler handler;
     public SeekBarThread(Handler handler){

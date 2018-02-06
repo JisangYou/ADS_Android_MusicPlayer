@@ -13,7 +13,7 @@ import java.util.List;
  * Created by Jisang on 2017-10-11.
  */
 
-public class Music {
+public class Music { // 데이터 모델 클래스
     private static Music music = null;
     public List<Item> data = new ArrayList<>();
 
@@ -42,22 +42,22 @@ public class Music {
         Cursor cursor = resolver.query(uri, proj, null, null, proj[2] + " ASC");
         // 4. 쿼리결과가 담긴 커서를 통해 데이터 꺼내기
         if (cursor != null) {
-            while (cursor.moveToNext()) {
+            while (cursor.moveToNext()) { // 커서가 돌면서, 가지고 온 데이터를 모델에 세팅 시키는 과정.
                 Item item = new Item();
-                item.id = getValue(cursor, proj[0]);
+                item.id = getValue(cursor, proj[0]); // 이는 곧, MediaStore.Audio.Media._ID의 String을 값을 인자로 넣겠다는 의미
                 item.albumId = getValue(cursor, proj[1]);
                 item.artist = getValue(cursor, proj[2]);
                 item.title = getValue(cursor, proj[3]);
 
-                item.musicUri = makeMusicUri(item.id);
-                item.albumUri = makeAlbumUri(item.albumId);
+                item.musicUri = makeMusicUri(item.id); // 위에서 세팅한 모델 id를 uri로 바꾸는 메소드 for 주소
+                item.albumUri = makeAlbumUri(item.albumId); // 마찬가지로 Uri로 바꾸는 메소드.
                 data.add(item);
             }
             cursor.close();
         }
     }
 
-    private String getValue(Cursor cursor, String name) {
+    private String getValue(Cursor cursor, String name) {//  쿼리하는 것을 모듈화 시킴
         int index = cursor.getColumnIndex(name);
         return cursor.getString(index);
     }
